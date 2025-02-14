@@ -34,11 +34,11 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  background-color: white;
+  background-color: #fbfbfb;
   flex-grow: 1;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
 }
 </style>

@@ -3,7 +3,6 @@
     <div class="stat-header">
       <span class="stat-name">{{ name }}</span>
       <i :class="['fa', icon, 'stat-icon']"></i>
-      <!-- Use the <i> tag with dynamic icon class -->
     </div>
     <div class="stat-value">
       {{ value }}
@@ -14,7 +13,6 @@
 <script setup>
 import { defineProps } from "vue";
 
-// Props to accept name, value, and icon class
 defineProps({
   name: String,
   value: [String, Number],
@@ -31,7 +29,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .stat-header {
