@@ -30,22 +30,23 @@ defineProps({
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  justify-content: space-between;
 }
 
 .stat-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .stat-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   color: #0f3659;
 }
 
 .stat-icon {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #006ba6;
   margin-left: 20px;
 }
@@ -53,5 +54,7 @@ defineProps({
 .stat-value {
   font-size: 16px;
   color: #0288d1;
+  display: flex;
+  align-self: flex-start;
 }
 </style>

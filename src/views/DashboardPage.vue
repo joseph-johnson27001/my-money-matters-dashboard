@@ -14,17 +14,23 @@
 
     <!-- Graphs Section -->
     <div class="graphs-container">
+      <GraphCard title="Total Employees">
+        <TotalEmployeesGraph />
+      </GraphCard>
+      <GraphCard title="Employee Net Promotor Score">
+        <EmployeeNetPromoterGraph />
+      </GraphCard>
       <GraphCard title="Employee Performance">
         <EmployeePerformanceGraph />
       </GraphCard>
       <GraphCard title="Employee Satisfaction">
         <EmployeeSatisfactionGraph />
       </GraphCard>
-      <GraphCard title="Spending Breakdown">
-        <SpendingBreakdownGraph />
+      <GraphCard title="Employee Age Range">
+        <AgeRangeGraph />
       </GraphCard>
-      <GraphCard title="Total Employees">
-        <TotalEmployeesGraph />
+      <GraphCard title="Employee Gender Breakdown">
+        <GenderGraph />
       </GraphCard>
     </div>
   </div>
@@ -32,11 +38,13 @@
 
 <script setup>
 import StatCard from "@/components/StatCard.vue";
-import GraphCard from "@/components/GraphCard.vue"; // Import the GraphCard component
+import GraphCard from "@/components/GraphCard.vue";
 import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGraph.vue";
 import EmployeeSatisfactionGraph from "@/components/Graphs/EmployeeSatisfactionGraph.vue";
-import SpendingBreakdownGraph from "@/components/Graphs/SpendingBreakdownGraph.vue";
 import TotalEmployeesGraph from "@/components/Graphs/TotalEmployeesGraph.vue";
+import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
+import GenderGraph from "@/components/Graphs/GenderGraph.vue";
+import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
 
 const stats = [
   {
@@ -54,7 +62,7 @@ const stats = [
   {
     name: "Employee Turnover Rate",
     value: "8%",
-    icon: "fa-percent",
+    icon: "fa-user-minus",
     iconColor: "#ff9800",
   },
   {
@@ -75,19 +83,31 @@ const stats = [
     icon: "fa-calendar-times",
     iconColor: "#9c27b0",
   },
+  {
+    name: "Roles Recruiting",
+    value: "5",
+    icon: "fa-briefcase",
+    iconColor: "#9c27b0",
+  },
+  {
+    name: "Retention Rate",
+    value: "95%",
+    icon: "fa-handshake",
+    iconColor: "#9c27b0",
+  },
 ];
 </script>
 
 <style scoped>
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .stats-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -108,10 +128,7 @@ const stats = [
   display: grid;
   gap: 10px;
   margin-top: 10px;
-  grid-template-columns: repeat(
-    2,
-    1fr
-  ); /* By default, display two graphs per row */
+  grid-template-columns: repeat(2, 1fr);
 }
 
 /* Stack graphs on smaller screens */

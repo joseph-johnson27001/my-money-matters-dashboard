@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <canvas ref="satisfactionChart"></canvas>
+    <canvas ref="eNpsChart"></canvas>
   </div>
 </template>
 
@@ -29,11 +29,11 @@ ChartJS.register(
 );
 
 export default {
-  name: "SatisfactionGraph",
+  name: "eNPSGraph",
   data() {
     return {
       chartInstance: null,
-      isDestroyed: false, // Track destruction state
+      isDestroyed: false,
     };
   },
   mounted() {
@@ -43,16 +43,15 @@ export default {
     });
   },
   beforeUnmount() {
-    this.isDestroyed = true; // Set flag when component is unmounted
+    this.isDestroyed = true;
     window.removeEventListener("resize", this.handleResize);
     this.destroyChart();
   },
   methods: {
     renderChart() {
-      // Check if the component is destroyed or if the chart reference is invalid
-      if (this.isDestroyed || !this.$refs.satisfactionChart) return;
-      this.destroyChart(); // Prevents duplicate charts
-      this.chartInstance = new ChartJS(this.$refs.satisfactionChart, {
+      if (this.isDestroyed || !this.$refs.eNpsChart) return;
+      this.destroyChart();
+      this.chartInstance = new ChartJS(this.$refs.eNpsChart, {
         type: "line",
         data: {
           labels: [
@@ -71,13 +70,13 @@ export default {
           ],
           datasets: [
             {
-              label: "Employee Satisfaction (%)",
-              data: [85, 88, 82, 90, 87, 89, 92, 91, 85, 87, 89, 92],
+              label: "eNPS Score",
+              data: [20, 35, 30, 45, 50, 40, 55, 60, 70, 65, 75, 80],
               fill: false,
-              borderColor: "rgb(153, 102, 255)",
+              borderColor: "#0288d1",
               tension: 0.2,
               borderWidth: 2,
-              pointBackgroundColor: "rgb(153, 102, 255)",
+              pointBackgroundColor: "#0288d1",
               pointBorderColor: "#fff",
               pointBorderWidth: 2,
               pointRadius: 5,
@@ -91,8 +90,9 @@ export default {
             x: { grid: { display: false } },
             y: {
               grid: { display: true },
-
-              ticks: { stepSize: 5 },
+              min: 0,
+              max: 100,
+              ticks: { stepSize: 20 },
             },
           },
           plugins: {
@@ -100,7 +100,7 @@ export default {
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (tooltipItem) => `${tooltipItem.raw}%`,
+                label: (tooltipItem) => `${tooltipItem.raw}`,
               },
             },
           },
@@ -109,7 +109,6 @@ export default {
     },
 
     destroyChart() {
-      // Ensure that the chart instance is valid before attempting to destroy
       if (this.chartInstance && !this.isDestroyed) {
         this.chartInstance.destroy();
         this.chartInstance = null;
@@ -117,7 +116,6 @@ export default {
     },
 
     handleResize() {
-      // Ensure resize is triggered only if the chart instance is valid
       if (this.chartInstance && !this.isDestroyed) {
         requestAnimationFrame(() => {
           if (this.chartInstance) this.chartInstance.resize();
