@@ -84,7 +84,7 @@ const stats = [
     iconColor: "#9c27b0",
   },
   {
-    name: "Roles Recruiting",
+    name: "Roles Currently Recruiting",
     value: "5",
     icon: "fa-briefcase",
     iconColor: "#9c27b0",
@@ -101,14 +101,8 @@ const stats = [
 <style scoped>
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-}
-
-@media (max-width: 1400px) {
-  .stats-container {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 @media (max-width: 768px) {

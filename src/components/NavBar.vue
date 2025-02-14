@@ -15,11 +15,11 @@
 .navbar {
   width: 100%;
   background-color: #391474;
-  height: 45px;
+  height: 35px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  padding: 5px 0px;
+  padding: 10px 0px;
 }
 
 .nav-content {
@@ -34,7 +34,7 @@
 }
 
 .logo {
-  max-height: 40px;
+  max-height: 35px;
   height: auto;
   width: auto;
 }

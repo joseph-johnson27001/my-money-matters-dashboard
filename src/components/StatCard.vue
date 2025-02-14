@@ -48,7 +48,7 @@ defineProps({
 .stat-icon {
   font-size: 1rem;
   color: #006ba6;
-  margin-left: 20px;
+  margin-left: 5px;
 }
 
 .stat-value {
