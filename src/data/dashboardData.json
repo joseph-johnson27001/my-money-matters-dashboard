@@ -1,0 +1,78 @@
+{
+  "stats": [
+    {
+      "name": "Total Employees",
+      "value": 120,
+      "icon": "fas fa-users",
+      "iconColor": "#006ba6"
+    },
+    {
+      "name": "New Hires This Month",
+      "value": 5,
+      "icon": "fa-user-plus",
+      "iconColor": "#4caf50"
+    },
+    {
+      "name": "Employee Turnover Rate",
+      "value": "8%",
+      "icon": "fa-user-minus",
+      "iconColor": "#ff9800"
+    },
+    {
+      "name": "Total Monthly Payroll",
+      "value": "£50,000",
+      "icon": "fa-dollar-sign",
+      "iconColor": "#f44336"
+    },
+    {
+      "name": "Employee Satisfaction",
+      "value": "90%",
+      "icon": "fa-smile",
+      "iconColor": "#2196f3"
+    },
+    {
+      "name": "Absenteeism Rate",
+      "value": "5%",
+      "icon": "fa-calendar-times",
+      "iconColor": "#9c27b0"
+    },
+    {
+      "name": "Roles Currently Recruiting",
+      "value": "5",
+      "icon": "fa-briefcase",
+      "iconColor": "#9c27b0"
+    },
+    {
+      "name": "Retention Rate",
+      "value": "95%",
+      "icon": "fa-handshake",
+      "iconColor": "#9c27b0"
+    }
+  ],
+  "graphs": {
+    "totalEmployees": {
+      "label": "Total Employees",
+      "data": [120, 150, 200, 250, 300]
+    },
+    "employeeNetPromoter": {
+      "label": "Employee Net Promoter Score",
+      "data": [70, 75, 85, 90, 85]
+    },
+    "employeePerformance": {
+      "label": "Employee Performance",
+      "data": [80, 85, 78, 88, 90]
+    },
+    "employeeSatisfaction": {
+      "label": "Employee Satisfaction",
+      "data": [85, 88, 82, 90, 87]
+    },
+    "ageRange": {
+      "label": "Employee Age Range",
+      "data": [15, 20, 10, 35, 40]
+    },
+    "genderBreakdown": {
+      "labels": ["Male", "Female", "Non-binary", "Other"],
+      "data": [120, 150, 20, 10]
+    }
+  }
+}
