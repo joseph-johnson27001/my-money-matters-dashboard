@@ -1,33 +1,3 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import StatCard from "@/components/StatCard.vue";
-import GraphCard from "@/components/GraphCard.vue";
-import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGraph.vue";
-import EmployeeSatisfactionGraph from "@/components/Graphs/EmployeeSatisfactionGraph.vue";
-import TotalEmployeesGraph from "@/components/Graphs/TotalEmployeesGraph.vue";
-import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
-import GenderGraph from "@/components/Graphs/GenderGraph.vue";
-import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
-import { fetchDashboardData } from "@/api/dashboardApi"; // Importing the API function
-
-const stats = ref([]);
-const graphs = ref({});
-
-const loadData = async () => {
-  try {
-    const data = await fetchDashboardData(); // Simulate API call
-    stats.value = data.stats;
-    graphs.value = data.graphs;
-  } catch (error) {
-    console.error("Error fetching dashboard data:", error);
-  }
-};
-
-onMounted(() => {
-  loadData(); // Load data when the component mounts
-});
-</script>
-
 <template>
   <div class="dashboard">
     <!-- Stats Cards Section -->
@@ -45,26 +15,88 @@ onMounted(() => {
     <!-- Graphs Section -->
     <div class="graphs-container">
       <GraphCard title="Total Employees">
-        <TotalEmployeesGraph :data="graphs.totalEmployees" />
+        <TotalEmployeesGraph />
       </GraphCard>
-      <GraphCard title="Employee Net Promoter Score">
-        <EmployeeNetPromoterGraph :data="graphs.employeeNetPromoter" />
+      <GraphCard title="Employee Net Promotor Score">
+        <EmployeeNetPromoterGraph />
       </GraphCard>
       <GraphCard title="Employee Performance">
-        <EmployeePerformanceGraph :data="graphs.employeePerformance" />
+        <EmployeePerformanceGraph />
       </GraphCard>
       <GraphCard title="Employee Satisfaction">
-        <EmployeeSatisfactionGraph :data="graphs.employeeSatisfaction" />
+        <EmployeeSatisfactionGraph />
       </GraphCard>
       <GraphCard title="Employee Age Range">
-        <AgeRangeGraph :data="graphs.ageRange" />
+        <AgeRangeGraph />
       </GraphCard>
       <GraphCard title="Employee Gender Breakdown">
-        <GenderGraph :data="graphs.genderBreakdown" />
+        <GenderGraph />
       </GraphCard>
     </div>
   </div>
 </template>
+
+<script setup>
+import StatCard from "@/components/StatCard.vue";
+import GraphCard from "@/components/GraphCard.vue";
+import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGraph.vue";
+import EmployeeSatisfactionGraph from "@/components/Graphs/EmployeeSatisfactionGraph.vue";
+import TotalEmployeesGraph from "@/components/Graphs/TotalEmployeesGraph.vue";
+import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
+import GenderGraph from "@/components/Graphs/GenderGraph.vue";
+import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
+
+const stats = [
+  {
+    name: "Total Employees",
+    value: 120,
+    icon: "fas fa-users",
+    iconColor: "#006ba6",
+  },
+  {
+    name: "New Hires This Month",
+    value: 5,
+    icon: "fa-user-plus",
+    iconColor: "#4caf50",
+  },
+  {
+    name: "Employee Turnover Rate",
+    value: "8%",
+    icon: "fa-user-minus",
+    iconColor: "#ff9800",
+  },
+  {
+    name: "Total Monthly Payroll",
+    value: "£50,000",
+    icon: "fa-dollar-sign",
+    iconColor: "#f44336",
+  },
+  {
+    name: "Employee Satisfaction",
+    value: "90%",
+    icon: "fa-smile",
+    iconColor: "#2196f3",
+  },
+  {
+    name: "Absenteeism Rate",
+    value: "5%",
+    icon: "fa-calendar-times",
+    iconColor: "#9c27b0",
+  },
+  {
+    name: "Roles Currently Recruiting",
+    value: "5",
+    icon: "fa-briefcase",
+    iconColor: "#9c27b0",
+  },
+  {
+    name: "Retention Rate",
+    value: "95%",
+    icon: "fa-handshake",
+    iconColor: "#9c27b0",
+  },
+];
+</script>
 
 <style scoped>
 .stats-container {
