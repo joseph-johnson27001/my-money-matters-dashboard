@@ -1,7 +1,11 @@
 <template>
   <nav class="navbar">
     <div class="nav-content">
-      <h3>My Money Matters Dashboard</h3>
+      <img
+        src="/my-money-matters-logo.png"
+        alt="My Money Matters Logo"
+        class="logo"
+      />
     </div>
   </nav>
 </template>
@@ -10,9 +14,10 @@
 .navbar {
   width: 100%;
   background-color: #391474;
-  height: 50px;
+  height: 45px;
   display: flex;
   justify-content: center;
+  padding: 5px 0px;
 }
 
 .nav-content {
@@ -22,5 +27,11 @@
   align-items: center;
   padding: 0 20px;
   color: white;
+}
+
+.logo {
+  max-height: 40px;
+  height: auto;
+  width: auto;
 }
 </style>

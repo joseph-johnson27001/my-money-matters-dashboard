@@ -59,7 +59,7 @@ const stats = [
   },
   {
     name: "Total Monthly Payroll",
-    value: "$50,000",
+    value: "£50,000",
     icon: "fa-dollar-sign",
     iconColor: "#f44336",
   },
