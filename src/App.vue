@@ -2,13 +2,14 @@
   <div class="app">
     <NavBar />
     <main class="content">
-      <slot />
+      <Dashboard />
     </main>
   </div>
 </template>
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import Dashboard from "@/views/DashboardPage.vue";
 </script>
 
 <style>
@@ -18,8 +19,8 @@ import NavBar from "@/components/NavBar.vue";
 }
 
 body {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 .app {
@@ -37,5 +38,7 @@ body {
   flex-grow: 1;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
 }
 </style>
