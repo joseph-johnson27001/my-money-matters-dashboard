@@ -29,7 +29,6 @@ export default {
         "rgba(187, 143, 206, 1)",
         "rgba(247, 220, 111, 1)",
       ],
-      borderColors: "#444",
     };
   },
   mounted() {
