@@ -6,6 +6,7 @@
         alt="My Money Matters Logo"
         class="logo"
       />
+      <i class="fas fa-bars menu-icon"></i>
     </div>
   </nav>
 </template>
@@ -17,6 +18,7 @@
   height: 45px;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
   padding: 5px 0px;
 }
 
@@ -25,13 +27,21 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 20px;
   color: white;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .logo {
   max-height: 40px;
   height: auto;
   width: auto;
+}
+
+.menu-icon {
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
 }
 </style>

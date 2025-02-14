@@ -24,7 +24,7 @@ body {
 }
 
 .app {
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -34,10 +34,8 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  background-color: #fbfbfb;
+  background-color: #f9f9f9;
   flex-grow: 1;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
   padding: 20px;
   box-sizing: border-box;
 }
