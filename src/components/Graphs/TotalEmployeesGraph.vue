@@ -75,6 +75,8 @@ export default {
               label: "Number of Employees",
               data: [50, 55, 50, 55, 60, 55, 60, 65, 65, 70, 85, 70],
               backgroundColor: "rgba(2, 136, 209, 0.2)",
+              hoverBackgroundColor: "rgba(2, 136, 209, 0.5)",
+
               borderColor: "rgba(2, 136, 209)",
               borderWidth: 1,
             },
