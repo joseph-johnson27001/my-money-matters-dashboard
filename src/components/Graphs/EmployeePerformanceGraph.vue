@@ -45,6 +45,7 @@ export default {
             data: [],
             borderColor: "rgba(34, 139, 34, 1)",
             backgroundColor: "rgba(34, 139, 34, 0.2)",
+            hoverBackgroundColor: "rgba(34, 139, 34, 0.5)",
             borderWidth: 1,
           },
         ],
@@ -108,7 +109,14 @@ export default {
       });
 
       this.chartData.labels = this.scoreRanges;
-      this.chartData.datasets[0].data = frequency;
+      this.chartData.datasets[0] = {
+        label: "Number of Employees",
+        data: frequency,
+        borderColor: "rgba(34, 139, 34, 1)",
+        backgroundColor: "rgba(34, 139, 34, 0.2)",
+        hoverBackgroundColor: "rgba(34, 139, 34, 0.5)", // Added hover effect
+        borderWidth: 1,
+      };
     },
 
     renderChart() {
