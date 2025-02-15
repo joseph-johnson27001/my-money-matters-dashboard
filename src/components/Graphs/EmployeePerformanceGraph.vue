@@ -45,7 +45,7 @@ export default {
             data: [],
             borderColor: "rgba(34, 139, 34, 1)",
             backgroundColor: "rgba(34, 139, 34, 0.2)",
-            hoverBackgroundColor: "rgba(34, 139, 34, 0.5)",
+            hoverBackgroundColor: "rgba(34, 139, 34, 0.4)",
             borderWidth: 1,
           },
         ],
