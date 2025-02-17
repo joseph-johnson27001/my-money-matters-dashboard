@@ -11,7 +11,6 @@
           :name="stat.name"
           :value="stat.value"
           :icon="stat.icon"
-          :iconColor="stat.iconColor"
         />
       </div>
 
@@ -63,49 +62,41 @@ const stats = ref([
     name: "Total Employees",
     value: "",
     icon: "fas fa-users",
-    iconColor: "#006ba6",
   },
   {
     name: "New Hires This Month",
     value: "",
     icon: "fa-user-plus",
-    iconColor: "#4caf50",
   },
   {
     name: "Employee Turnover Rate",
     value: "",
     icon: "fa-user-minus",
-    iconColor: "#ff9800",
   },
   {
     name: "Total Monthly Payroll",
     value: "",
     icon: "fa-dollar-sign",
-    iconColor: "#f44336",
   },
   {
     name: "Employee Satisfaction",
     value: "",
     icon: "fa-smile",
-    iconColor: "#2196f3",
   },
   {
     name: "Absenteeism Rate",
     value: "",
     icon: "fa-calendar-times",
-    iconColor: "#9c27b0",
   },
   {
     name: "Roles Currently Recruiting",
     value: "",
     icon: "fa-briefcase",
-    iconColor: "#9c27b0",
   },
   {
     name: "Retention Rate",
     value: "",
     icon: "fa-handshake",
-    iconColor: "#9c27b0",
   },
 ]);
 
@@ -119,11 +110,14 @@ const loadData = async () => {
       await fetchDashboardData();
 
     // Filter out empty or blank values for statsData, ageRangeData, eNPData, and employeePerformanceData
-    stats.value = statsData
-      .filter((stat) => stat.name && stat.value) // Only include stats with both name and value
-      .map((stat) => ({
-        ...stat,
-      }));
+    stats.value = stats.value.map((stat, index) => {
+      const updatedStat = statsData[index]; // Get the corresponding stat from API data
+      return {
+        ...stat, // Keep existing values (like icon and iconColor)
+        value: updatedStat?.value || stat.value, // Update only the value if available
+        name: updatedStat?.name || stat.name, // Update the name if available
+      };
+    });
 
     // Filter out any entries that have empty values in ageRangeData
     ageRangeGraphData.value = ageRangeData.filter(
@@ -138,11 +132,8 @@ const loadData = async () => {
     // Filter out any entries that have empty values in employeePerformanceData
     employeePerformanceGraphData.value = employeePerformanceData
       .filter((item) => item.employeePerformanceScores)
-      .map((item) => parseFloat(item.employeePerformanceScores)); // Convert to float to handle numeric data
+      .map((item) => parseFloat(item.employeePerformanceScores));
 
-    console.log(employeePerformanceGraphData.value); // Check the final array format
-
-    console.log(employeePerformanceData);
     isLoading.value = false;
   } catch (error) {
     console.error("Error loading dashboard data:", error);
