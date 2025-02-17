@@ -29,7 +29,13 @@ ChartJS.register(
 );
 
 export default {
-  name: "eNPSGraph",
+  name: "EmployeeNetPromoterGraph",
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       chartInstance: null,
@@ -47,31 +53,32 @@ export default {
     window.removeEventListener("resize", this.handleResize);
     this.destroyChart();
   },
+  watch: {
+    data(newData) {
+      if (this.chartInstance && Array.isArray(newData)) {
+        const eNPDates = newData.map((item) => item.eNPDates);
+        const eNPValues = newData.map((item) => item.enpValue);
+        this.chartInstance.data.labels = eNPDates;
+        this.chartInstance.data.datasets[0].data = eNPValues;
+      }
+      this.renderChart();
+    },
+  },
   methods: {
     renderChart() {
       if (this.isDestroyed || !this.$refs.eNpsChart) return;
       this.destroyChart();
+      const eNPDates = this.data.map((item) => item.eNPDates);
+      const eNPValues = this.data.map((item) => item.enpValue);
+
       this.chartInstance = new ChartJS(this.$refs.eNpsChart, {
         type: "line",
         data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+          labels: eNPDates,
           datasets: [
             {
               label: "eNPS Score",
-              data: [20, 35, 30, 45, 50, 40, 55, 60, 70, 65, 75, 80],
+              data: eNPValues,
               fill: false,
               borderColor: "#0288d1",
               tension: 0.2,

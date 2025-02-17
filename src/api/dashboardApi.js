@@ -18,9 +18,17 @@ export async function fetchDashboardData() {
         count: row[4], // Getting data from fifth column
       }));
 
+      const eNPData = data.values.slice(1).map((row) => ({
+        eNPDates: row[6],
+        enpValue: row[7],
+      }));
+
+      console.log(eNPData);
+
       return {
         statsData,
         ageRangeData,
+        eNPData,
       };
     } else {
       console.log("No data found in the sheet.");

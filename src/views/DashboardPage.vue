@@ -17,8 +17,8 @@
       <GraphCard title="Total Employees">
         <TotalEmployeesGraph />
       </GraphCard>
-      <GraphCard title="Employee Net Promotor Score">
-        <EmployeeNetPromoterGraph />
+      <GraphCard title="Employee Net Promoter Score">
+        <EmployeeNetPromoterGraph :data="eNPGraphData" />
       </GraphCard>
       <GraphCard title="Employee Performance">
         <EmployeePerformanceGraph />
@@ -27,7 +27,6 @@
         <EmployeeSatisfactionGraph />
       </GraphCard>
       <GraphCard title="Employee Age Range">
-        <!-- Pass the ageRangeGraphData to AgeRangeGraph -->
         <AgeRangeGraph :data="ageRangeGraphData" />
       </GraphCard>
       <GraphCard title="Employee Gender Breakdown">
@@ -102,16 +101,20 @@ const stats = ref([
 ]);
 
 const ageRangeGraphData = ref([]);
+const eNPGraphData = ref([]);
 
 const loadData = async () => {
   try {
-    const { statsData, ageRangeData } = await fetchDashboardData();
+    const { statsData, ageRangeData, eNPData } = await fetchDashboardData();
     stats.value = stats.value.map((stat) => {
       const fetchedStat = statsData.find((f) => f.name === stat.name);
       return fetchedStat ? { ...stat, value: fetchedStat.value } : stat;
     });
 
     ageRangeGraphData.value = ageRangeData;
+    eNPGraphData.value = eNPData;
+    console.log(ageRangeData); // Make sure this is an array of objects in the expected format.
+    console.log(eNPData);
   } catch (error) {
     console.error("Error loading dashboard data:", error);
   }
