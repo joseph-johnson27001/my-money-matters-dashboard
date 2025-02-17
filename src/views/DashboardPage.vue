@@ -27,7 +27,8 @@
         <EmployeeSatisfactionGraph />
       </GraphCard>
       <GraphCard title="Employee Age Range">
-        <AgeRangeGraph />
+        <!-- Pass the ageRangeGraphData to AgeRangeGraph -->
+        <AgeRangeGraph :data="ageRangeGraphData" />
       </GraphCard>
       <GraphCard title="Employee Gender Breakdown">
         <GenderGraph />
@@ -48,6 +49,7 @@ import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
 import GenderGraph from "@/components/Graphs/GenderGraph.vue";
 import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
 
+// Define stats data as a ref
 const stats = ref([
   {
     name: "Total Employees",
@@ -99,17 +101,17 @@ const stats = ref([
   },
 ]);
 
+const ageRangeGraphData = ref([]);
+
 const loadData = async () => {
   try {
-    console.log("Fetching data from Google Sheets...");
-    const fetchedStats = await fetchDashboardData();
-
+    const { statsData, ageRangeData } = await fetchDashboardData();
     stats.value = stats.value.map((stat) => {
-      const fetchedStat = fetchedStats.find((f) => f.name === stat.name);
+      const fetchedStat = statsData.find((f) => f.name === stat.name);
       return fetchedStat ? { ...stat, value: fetchedStat.value } : stat;
     });
 
-    console.log("Updated Stats:", stats.value);
+    ageRangeGraphData.value = ageRangeData;
   } catch (error) {
     console.error("Error loading dashboard data:", error);
   }

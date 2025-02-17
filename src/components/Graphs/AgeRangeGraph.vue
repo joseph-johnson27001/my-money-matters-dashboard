@@ -28,25 +28,16 @@ ChartJS.register(
 
 export default {
   name: "AgeRangeGraph",
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       chartInstance: null,
       isMounted: false,
-      ageRanges: [
-        "18-21",
-        "22-24",
-        "25-29",
-        "30-34",
-        "35-39",
-        "40-44",
-        "45-49",
-        "50-54",
-        "55-59",
-        "60-64",
-        "65-69",
-        "70+",
-      ],
-      employeeCounts: [8, 7, 20, 22, 15, 15, 12, 13, 7, 5, 3, 2],
     };
   },
   mounted() {
@@ -61,20 +52,35 @@ export default {
     window.removeEventListener("resize", this.handleResize);
     this.destroyChart();
   },
+  watch: {
+    data(newData) {
+      if (this.chartInstance && Array.isArray(newData)) {
+        const ageRanges = newData.map((item) => item.ageRange);
+        const employeeCounts = newData.map((item) => item.count);
+        this.chartInstance.data.labels = ageRanges;
+        this.chartInstance.data.datasets[0].data = employeeCounts;
+      }
+      // Re-render chart
+      this.renderChart();
+    },
+  },
   methods: {
     renderChart() {
       if (!this.isMounted || !this.$refs.ageRangeChart) return;
 
       this.destroyChart();
 
+      const ageRanges = this.data.map((item) => item.ageRange);
+      const employeeCounts = this.data.map((item) => item.count);
+
       this.chartInstance = new ChartJS(this.$refs.ageRangeChart, {
         type: "bar",
         data: {
-          labels: this.ageRanges,
+          labels: ageRanges,
           datasets: [
             {
               label: "Employees",
-              data: this.employeeCounts,
+              data: employeeCounts,
               backgroundColor: "rgb(255,224,230)",
               borderColor: "rgb(255, 99, 132)",
               borderWidth: 1,
