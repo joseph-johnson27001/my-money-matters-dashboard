@@ -15,7 +15,7 @@ export async function fetchDashboardData() {
 
       const ageRangeData = data.values.slice(1).map((row) => ({
         ageRange: row[3], // Getting data from fourth column
-        count: row[4], // Getting data from fifth column
+        count: row[4], // Getting data from fifth column - follow formula for other rows
       }));
 
       const eNPData = data.values.slice(1).map((row) => ({
@@ -37,6 +37,11 @@ export async function fetchDashboardData() {
         genderCounts: row[15],
       }));
 
+      const TotalEmployeeData = data.values.slice(1).map((row) => ({
+        totalEmployeesLabels: row[17],
+        totalEmployeesCounts: row[18],
+      }));
+
       return {
         statsData,
         ageRangeData,
@@ -44,6 +49,7 @@ export async function fetchDashboardData() {
         employeePerformanceData,
         employeeSatisfactionData,
         genderData,
+        TotalEmployeeData,
       };
     } else {
       console.log("No data found in the sheet.");

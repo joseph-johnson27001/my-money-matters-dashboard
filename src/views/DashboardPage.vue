@@ -17,7 +17,10 @@
       <!-- Graphs Section -->
       <div class="graphs-container">
         <GraphCard title="Total Employees">
-          <TotalEmployeesGraph />
+          <TotalEmployeesGraph
+            :labels="totalEmployeesLabels"
+            :counts="totalEmployeesCounts"
+          />
         </GraphCard>
         <GraphCard title="Employee Net Promoter Score">
           <EmployeeNetPromoterGraph :data="eNPGraphData" />
@@ -57,7 +60,7 @@ import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGra
 import EmployeeSatisfactionGraph from "@/components/Graphs/EmployeeSatisfactionGraph.vue";
 import TotalEmployeesGraph from "@/components/Graphs/TotalEmployeesGraph.vue";
 import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
-import GenderGraph from "@/components/Graphs/GenderGraph.vue"; // Import the GenderGraph
+import GenderGraph from "@/components/Graphs/GenderGraph.vue";
 import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
 import LoadingAnimation from "@/components/LoadingAnimation.vue";
 
@@ -112,6 +115,8 @@ const employeePerformanceGraphData = ref([]);
 const employeeSatisfactionGraphData = ref({});
 const genderLabels = ref([]);
 const genderCounts = ref([]);
+const totalEmployeesLabels = ref([]);
+const totalEmployeesCounts = ref([]);
 
 const loadData = async () => {
   try {
@@ -122,6 +127,7 @@ const loadData = async () => {
       employeePerformanceData,
       employeeSatisfactionData,
       genderData,
+      TotalEmployeeData,
     } = await fetchDashboardData();
 
     // Filter out empty or blank values for statsData, ageRangeData, eNPData, employeePerformanceData, and employeeSatisfactionData
@@ -155,6 +161,16 @@ const loadData = async () => {
     employeeSatisfactionGraphData.value = employeeSatisfactionData.filter(
       (item) =>
         item.employeeSatisfactionDates && item.employeeSatisfactionScores
+    );
+    const filteredTotalEmployeeData = TotalEmployeeData.filter(
+      (item) => item.totalEmployeesLabels && item.totalEmployeesCounts !== null
+    );
+
+    totalEmployeesLabels.value = filteredTotalEmployeeData.map(
+      (item) => item.totalEmployeesLabels
+    );
+    totalEmployeesCounts.value = filteredTotalEmployeeData.map(
+      (item) => item.totalEmployeesCounts
     );
 
     isLoading.value = false;

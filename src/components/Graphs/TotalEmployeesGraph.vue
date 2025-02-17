@@ -28,55 +28,49 @@ ChartJS.register(
 
 export default {
   name: "TotalEmployeesChart",
+  props: {
+    labels: Array, // Pass in months
+    counts: Array, // Pass in employee numbers
+  },
   data() {
     return {
       chartInstance: null,
       isMounted: false, // Track mount state
     };
   },
+  watch: {
+    labels: "renderChart",
+    counts: "renderChart",
+  },
   mounted() {
-    this.isMounted = true; // Set flag when component is mounted
+    this.isMounted = true;
     this.$nextTick(() => {
       this.renderChart();
       window.addEventListener("resize", this.handleResize);
     });
   },
   beforeUnmount() {
-    this.isMounted = false; // Set flag when component is unmounted
+    this.isMounted = false;
     window.removeEventListener("resize", this.handleResize);
     this.destroyChart();
   },
   methods: {
     renderChart() {
-      // Prevent chart rendering if the component is not mounted or canvas reference is null
+      // Prevent chart rendering if component is not mounted or canvas is null
       if (!this.isMounted || !this.$refs.totalEmployeesChart) return;
 
-      this.destroyChart(); // Prevents duplicate charts
+      this.destroyChart(); // Avoid duplicate charts
 
       this.chartInstance = new ChartJS(this.$refs.totalEmployeesChart, {
         type: "bar",
         data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+          labels: this.labels || [], // Use dynamic labels
           datasets: [
             {
               label: "Number of Employees",
-              data: [50, 55, 50, 55, 60, 55, 60, 65, 65, 70, 85, 70],
+              data: this.counts || [], // Use dynamic data
               backgroundColor: "rgba(2, 136, 209, 0.2)",
               hoverBackgroundColor: "rgba(2, 136, 209, 0.5)",
-
               borderColor: "rgba(2, 136, 209)",
               borderWidth: 1,
             },
@@ -103,19 +97,15 @@ export default {
     },
 
     destroyChart() {
-      // Ensure chart instance is valid before attempting to destroy
-      if (this.chartInstance && this.isMounted) {
+      if (this.chartInstance) {
         this.chartInstance.destroy();
         this.chartInstance = null;
       }
     },
 
     handleResize() {
-      // Ensure resize is triggered only if the chart instance is valid and the component is mounted
-      if (this.chartInstance && this.isMounted) {
-        requestAnimationFrame(() => {
-          if (this.chartInstance) this.chartInstance.resize();
-        });
+      if (this.chartInstance) {
+        requestAnimationFrame(() => this.chartInstance?.resize());
       }
     },
   },
