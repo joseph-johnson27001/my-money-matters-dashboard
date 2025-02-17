@@ -8,7 +8,7 @@ export async function fetchDashboardData() {
     );
     const data = await response.json();
     if (data && data.values) {
-      const statsData = data.values.map((row) => ({
+      const statsData = data.values.slice(1).map((row) => ({
         name: row[0], // Getting data from first column
         value: row[1], // Getting data from second column
       }));
