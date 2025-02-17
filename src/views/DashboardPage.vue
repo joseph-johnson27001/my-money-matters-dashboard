@@ -37,6 +37,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import { fetchDashboardData } from "@/api/dashboardApi";
 import StatCard from "@/components/StatCard.vue";
 import GraphCard from "@/components/GraphCard.vue";
 import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGraph.vue";
@@ -46,56 +48,74 @@ import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
 import GenderGraph from "@/components/Graphs/GenderGraph.vue";
 import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
 
-const stats = [
+const stats = ref([
   {
     name: "Total Employees",
-    value: 120,
+    value: 0,
     icon: "fas fa-users",
     iconColor: "#006ba6",
   },
   {
     name: "New Hires This Month",
-    value: 5,
+    value: 0,
     icon: "fa-user-plus",
     iconColor: "#4caf50",
   },
   {
     name: "Employee Turnover Rate",
-    value: "8%",
+    value: "0%",
     icon: "fa-user-minus",
     iconColor: "#ff9800",
   },
   {
     name: "Total Monthly Payroll",
-    value: "£50,000",
+    value: "£0",
     icon: "fa-dollar-sign",
     iconColor: "#f44336",
   },
   {
     name: "Employee Satisfaction",
-    value: "90%",
+    value: "0%",
     icon: "fa-smile",
     iconColor: "#2196f3",
   },
   {
     name: "Absenteeism Rate",
-    value: "5%",
+    value: "0%",
     icon: "fa-calendar-times",
     iconColor: "#9c27b0",
   },
   {
     name: "Roles Currently Recruiting",
-    value: "5",
+    value: "0",
     icon: "fa-briefcase",
     iconColor: "#9c27b0",
   },
   {
     name: "Retention Rate",
-    value: "95%",
+    value: "0%",
     icon: "fa-handshake",
     iconColor: "#9c27b0",
   },
-];
+]);
+
+const loadData = async () => {
+  try {
+    console.log("Fetching data from Google Sheets...");
+    const fetchedStats = await fetchDashboardData();
+
+    stats.value = stats.value.map((stat) => {
+      const fetchedStat = fetchedStats.find((f) => f.name === stat.name);
+      return fetchedStat ? { ...stat, value: fetchedStat.value } : stat;
+    });
+
+    console.log("Updated Stats:", stats.value);
+  } catch (error) {
+    console.error("Error loading dashboard data:", error);
+  }
+};
+
+onMounted(loadData);
 </script>
 
 <style scoped>

@@ -1,37 +1,32 @@
-// src/api/dashboardApi.js
-const SHEET_ID = "1V3bHZQuMr-irt-MZFLeAoDWAg7nLixWpLFDM3NKbtJg";
-const SHEET_NAME = "Sheet1"; // Change if your sheet name is different
-const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-
 export async function fetchDashboardData() {
+  const SHEET_ID = "1V3bHZQuMr-irt-MZFLeAoDWAg7nLixWpLFDM3NKbtJg";
+  const API_KEY = "AIzaSyBvjfsoD7BVMniPh0I-tpSnnl0cJIaNUR0";
+
+  console.log("API Key being passed:", API_KEY);
+
   try {
-    const response = await fetch(URL);
-    const text = await response.text();
+    // Directly fetch data from the Google Sheets API
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${API_KEY}`
+    );
+    const data = await response.json();
 
-    // Google Sheets API wraps the JSON in some extra characters, so we need to clean it
-    const json = JSON.parse(text.substring(47).slice(0, -2));
+    console.log("Fetched data from Google Sheets:", data);
 
-    // Extract data from Google Sheets response
-    const rows = json.table.rows;
+    if (data && data.values) {
+      const statsData = data.values.map((row) => ({
+        name: row[0], // Assuming column 1 contains 'Name'
+        value: row[1], // Assuming column 2 contains 'Value'
+      }));
 
-    // Convert into usable format
-    const stats = [];
-    const graphs = { totalEmployees: { labels: [], data: [] } };
-
-    rows.forEach((row) => {
-      const [name, value] = row.c.map((cell) => (cell ? cell.v : null));
-
-      if (name === "Total Employees") {
-        graphs.totalEmployees.labels.push(name);
-        graphs.totalEmployees.data.push(value);
-      } else {
-        stats.push({ name, value });
-      }
-    });
-
-    return { stats, graphs };
+      console.log("Processed Stats Data:", statsData);
+      return statsData;
+    } else {
+      console.log("No data found in the sheet.");
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching Google Sheets data:", error);
-    return { stats: [], graphs: {} };
+    return [];
   }
 }
