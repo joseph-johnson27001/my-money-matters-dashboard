@@ -24,8 +24,11 @@
           <EmployeeNetPromoterGraph :data="eNPGraphData" />
         </GraphCard>
         <GraphCard title="Employee Performance">
-          <EmployeePerformanceGraph />
+          <EmployeePerformanceGraph
+            :performanceScores="employeePerformanceGraphData"
+          />
         </GraphCard>
+
         <GraphCard title="Employee Satisfaction">
           <EmployeeSatisfactionGraph />
         </GraphCard>
@@ -108,26 +111,42 @@ const stats = ref([
 
 const ageRangeGraphData = ref([]);
 const eNPGraphData = ref([]);
+const employeePerformanceGraphData = ref([]);
 
 const loadData = async () => {
   try {
-    const { statsData, ageRangeData, eNPData } = await fetchDashboardData();
+    const { statsData, ageRangeData, eNPData, employeePerformanceData } =
+      await fetchDashboardData();
 
-    // Filter statsData to ensure it has both name and value
+    // Filter out empty or blank values for statsData, ageRangeData, eNPData, and employeePerformanceData
     stats.value = statsData
       .filter((stat) => stat.name && stat.value) // Only include stats with both name and value
       .map((stat) => ({
         ...stat,
       }));
 
-    ageRangeGraphData.value = ageRangeData;
-    eNPGraphData.value = eNPData;
+    // Filter out any entries that have empty values in ageRangeData
+    ageRangeGraphData.value = ageRangeData.filter(
+      (item) => item.ageRange && item.count
+    );
 
-    // Set loading to false once data is successfully loaded
+    // Filter out any entries that have empty values in eNPData
+    eNPGraphData.value = eNPData.filter(
+      (item) => item.eNPDates && item.enpValue
+    );
+
+    // Filter out any entries that have empty values in employeePerformanceData
+    employeePerformanceGraphData.value = employeePerformanceData
+      .filter((item) => item.employeePerformanceScores)
+      .map((item) => parseFloat(item.employeePerformanceScores)); // Convert to float to handle numeric data
+
+    console.log(employeePerformanceGraphData.value); // Check the final array format
+
+    console.log(employeePerformanceData);
     isLoading.value = false;
   } catch (error) {
     console.error("Error loading dashboard data:", error);
-    isLoading.value = false; // Ensure loading is false even on error
+    isLoading.value = false;
   }
 };
 

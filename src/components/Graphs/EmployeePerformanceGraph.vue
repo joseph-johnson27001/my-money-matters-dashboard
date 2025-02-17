@@ -28,14 +28,16 @@ ChartJS.register(
 
 export default {
   name: "PerformanceRangeChart",
+  props: {
+    performanceScores: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       chartInstance: null,
       isMounted: false, // Track mount state
-      performanceScores: [
-        0.5, 2.5, 3.8, 4.5, 1.2, 3.1, 6.7, 8.9, 2.3, 5.4, 6.1, 7.5, 8.0, 4.3,
-        3.9,
-      ],
       scoreRanges: ["8-10", "6-8", "4-6", "2-4", "0-2"],
       chartData: {
         labels: [],
@@ -84,10 +86,16 @@ export default {
       },
     };
   },
+  watch: {
+    performanceScores(newScores) {
+      this.prepareChartData(newScores);
+      this.renderChart();
+    },
+  },
   mounted() {
     this.isMounted = true; // Set flag when component is mounted
     this.$nextTick(() => {
-      this.prepareChartData();
+      this.prepareChartData(this.performanceScores); // Pass prop data initially
       this.renderChart();
       window.addEventListener("resize", this.handleResize);
     });
@@ -98,9 +106,9 @@ export default {
     this.destroyChart();
   },
   methods: {
-    prepareChartData() {
+    prepareChartData(scores) {
       const frequency = Array(this.scoreRanges.length).fill(0);
-      this.performanceScores.forEach((score) => {
+      scores.forEach((score) => {
         if (score >= 0 && score < 2) frequency[4]++;
         else if (score >= 2 && score < 4) frequency[3]++;
         else if (score >= 4 && score < 6) frequency[2]++;
@@ -108,13 +116,14 @@ export default {
         else if (score >= 8 && score <= 10) frequency[0]++;
       });
 
+      // Update chart data with new scores
       this.chartData.labels = this.scoreRanges;
       this.chartData.datasets[0] = {
         label: "Number of Employees",
         data: frequency,
         borderColor: "rgba(34, 139, 34, 1)",
         backgroundColor: "rgba(34, 139, 34, 0.2)",
-        hoverBackgroundColor: "rgba(34, 139, 34, 0.5)", // Added hover effect
+        hoverBackgroundColor: "rgba(34, 139, 34, 0.5)",
         borderWidth: 1,
       };
     },
@@ -122,9 +131,7 @@ export default {
     renderChart() {
       // Prevent chart rendering if the component is not mounted or if the canvas reference is invalid
       if (!this.isMounted || !this.$refs.performanceRangeChart) return;
-
       this.destroyChart(); // Prevents duplicate charts
-
       this.chartInstance = new ChartJS(this.$refs.performanceRangeChart, {
         type: "bar",
         data: this.chartData,

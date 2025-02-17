@@ -23,12 +23,15 @@ export async function fetchDashboardData() {
         enpValue: row[7],
       }));
 
-      console.log(eNPData);
+      const employeePerformanceData = data.values.slice(1).map((row) => ({
+        employeePerformanceScores: row[9],
+      }));
 
       return {
         statsData,
         ageRangeData,
         eNPData,
+        employeePerformanceData,
       };
     } else {
       console.log("No data found in the sheet.");
