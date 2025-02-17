@@ -9,13 +9,13 @@ export async function fetchDashboardData() {
     const data = await response.json();
     if (data && data.values) {
       const statsData = data.values.map((row) => ({
-        name: row[0],
-        value: row[1],
+        name: row[0], // Getting data from first column
+        value: row[1], // Getting data from second column
       }));
 
       const ageRangeData = data.values.slice(1).map((row) => ({
-        ageRange: row[3],
-        count: row[4],
+        ageRange: row[3], // Getting data from fourth column
+        count: row[4], // Getting data from fifth column
       }));
 
       return {
