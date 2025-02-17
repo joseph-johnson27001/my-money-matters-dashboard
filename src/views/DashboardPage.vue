@@ -29,7 +29,9 @@
         </GraphCard>
 
         <GraphCard title="Employee Satisfaction">
-          <EmployeeSatisfactionGraph />
+          <EmployeeSatisfactionGraph
+            :satisfactionData="employeeSatisfactionGraphData"
+          />
         </GraphCard>
         <GraphCard title="Employee Age Range">
           <AgeRangeGraph :data="ageRangeGraphData" />
@@ -103,13 +105,19 @@ const stats = ref([
 const ageRangeGraphData = ref([]);
 const eNPGraphData = ref([]);
 const employeePerformanceGraphData = ref([]);
+const employeeSatisfactionGraphData = ref({});
 
 const loadData = async () => {
   try {
-    const { statsData, ageRangeData, eNPData, employeePerformanceData } =
-      await fetchDashboardData();
+    const {
+      statsData,
+      ageRangeData,
+      eNPData,
+      employeePerformanceData,
+      employeeSatisfactionData,
+    } = await fetchDashboardData();
 
-    // Filter out empty or blank values for statsData, ageRangeData, eNPData, and employeePerformanceData
+    // Filter out empty or blank values for statsData, ageRangeData, eNPData, employeePerformanceData, and employeeSatisfactionData
     stats.value = stats.value.map((stat, index) => {
       const updatedStat = statsData[index]; // Get the corresponding stat from API data
       return {
@@ -133,6 +141,14 @@ const loadData = async () => {
     employeePerformanceGraphData.value = employeePerformanceData
       .filter((item) => item.employeePerformanceScores)
       .map((item) => parseFloat(item.employeePerformanceScores));
+
+    // Filter and prepare employee satisfaction data for the graph
+    console.log(employeeSatisfactionData);
+    employeeSatisfactionGraphData.value = employeeSatisfactionData.filter(
+      (item) =>
+        item.employeeSatisfactionDates && item.employeeSatisfactionScores
+    );
+    console.log(employeeSatisfactionGraphData);
 
     isLoading.value = false;
   } catch (error) {

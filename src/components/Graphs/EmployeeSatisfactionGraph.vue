@@ -30,6 +30,12 @@ ChartJS.register(
 
 export default {
   name: "SatisfactionGraph",
+  props: {
+    satisfactionData: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       chartInstance: null,
@@ -52,27 +58,22 @@ export default {
       // Check if the component is destroyed or if the chart reference is invalid
       if (this.isDestroyed || !this.$refs.satisfactionChart) return;
       this.destroyChart(); // Prevents duplicate charts
+
+      const labels = this.satisfactionData.map(
+        (item) => item.employeeSatisfactionDates
+      );
+      const data = this.satisfactionData.map(
+        (item) => item.employeeSatisfactionScores
+      );
+
       this.chartInstance = new ChartJS(this.$refs.satisfactionChart, {
         type: "line",
         data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+          labels,
           datasets: [
             {
               label: "Employee Satisfaction (%)",
-              data: [85, 88, 82, 90, 87, 89, 92, 91, 85, 87, 89, 92],
+              data,
               fill: false,
               borderColor: "rgb(153, 102, 255)",
               tension: 0.2,
@@ -91,7 +92,6 @@ export default {
             x: { grid: { display: false } },
             y: {
               grid: { display: true },
-
               ticks: { stepSize: 5 },
             },
           },

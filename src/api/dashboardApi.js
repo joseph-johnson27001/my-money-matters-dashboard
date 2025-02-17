@@ -27,11 +27,17 @@ export async function fetchDashboardData() {
         employeePerformanceScores: row[9],
       }));
 
+      const employeeSatisfactionData = data.values.slice(1).map((row) => ({
+        employeeSatisfactionDates: row[11],
+        employeeSatisfactionScores: row[12],
+      }));
+
       return {
         statsData,
         ageRangeData,
         eNPData,
         employeePerformanceData,
+        employeeSatisfactionData,
       };
     } else {
       console.log("No data found in the sheet.");
