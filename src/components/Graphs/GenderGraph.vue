@@ -17,12 +17,20 @@ ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
 export default {
   name: "GenderGraph",
+  props: {
+    genderLabels: {
+      type: Array,
+      required: true,
+    },
+    genderCounts: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       chartInstance: null,
       isMounted: false,
-      genderLabels: ["Male", "Female", "Non-binary", "Other"],
-      genderCounts: [120, 150, 20, 10],
       chartColors: [
         "rgba(133, 193, 233, 1)",
         "rgba(236, 112, 99, 1)",

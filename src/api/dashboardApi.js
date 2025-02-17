@@ -32,12 +32,18 @@ export async function fetchDashboardData() {
         employeeSatisfactionScores: row[12],
       }));
 
+      const genderData = data.values.slice(1).map((row) => ({
+        genderlabels: row[14],
+        genderCounts: row[15],
+      }));
+
       return {
         statsData,
         ageRangeData,
         eNPData,
         employeePerformanceData,
         employeeSatisfactionData,
+        genderData,
       };
     } else {
       console.log("No data found in the sheet.");

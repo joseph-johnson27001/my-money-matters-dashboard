@@ -37,7 +37,11 @@
           <AgeRangeGraph :data="ageRangeGraphData" />
         </GraphCard>
         <GraphCard title="Employee Gender Breakdown">
-          <GenderGraph />
+          <!-- Pass genderLabels and genderCounts as props -->
+          <GenderGraph
+            :genderLabels="genderLabels"
+            :genderCounts="genderCounts"
+          />
         </GraphCard>
       </div>
     </div>
@@ -53,7 +57,7 @@ import EmployeePerformanceGraph from "@/components/Graphs/EmployeePerformanceGra
 import EmployeeSatisfactionGraph from "@/components/Graphs/EmployeeSatisfactionGraph.vue";
 import TotalEmployeesGraph from "@/components/Graphs/TotalEmployeesGraph.vue";
 import AgeRangeGraph from "@/components/Graphs/AgeRangeGraph.vue";
-import GenderGraph from "@/components/Graphs/GenderGraph.vue";
+import GenderGraph from "@/components/Graphs/GenderGraph.vue"; // Import the GenderGraph
 import EmployeeNetPromoterGraph from "@/components/Graphs/EmployeeNetPromoterGraph.vue";
 import LoadingAnimation from "@/components/LoadingAnimation.vue";
 
@@ -106,6 +110,8 @@ const ageRangeGraphData = ref([]);
 const eNPGraphData = ref([]);
 const employeePerformanceGraphData = ref([]);
 const employeeSatisfactionGraphData = ref({});
+const genderLabels = ref([]);
+const genderCounts = ref([]);
 
 const loadData = async () => {
   try {
@@ -115,40 +121,37 @@ const loadData = async () => {
       eNPData,
       employeePerformanceData,
       employeeSatisfactionData,
+      genderData,
     } = await fetchDashboardData();
 
     // Filter out empty or blank values for statsData, ageRangeData, eNPData, employeePerformanceData, and employeeSatisfactionData
     stats.value = stats.value.map((stat, index) => {
-      const updatedStat = statsData[index]; // Get the corresponding stat from API data
+      const updatedStat = statsData[index];
       return {
-        ...stat, // Keep existing values (like icon and iconColor)
-        value: updatedStat?.value || stat.value, // Update only the value if available
-        name: updatedStat?.name || stat.name, // Update the name if available
+        ...stat,
+        value: updatedStat?.value || stat.value,
+        name: updatedStat?.name || stat.name,
       };
     });
 
-    // Filter out any entries that have empty values in ageRangeData
+    // Prepare the genderLabels and genderCounts based on the genderData fetched from the API
+    genderLabels.value = genderData.map((item) => item.genderlabels);
+    genderCounts.value = genderData.map((item) => item.genderCounts);
+
+    // Filter out any entries that have empty values in other datasets
     ageRangeGraphData.value = ageRangeData.filter(
       (item) => item.ageRange && item.count
     );
-
-    // Filter out any entries that have empty values in eNPData
     eNPGraphData.value = eNPData.filter(
       (item) => item.eNPDates && item.enpValue
     );
-
-    // Filter out any entries that have empty values in employeePerformanceData
     employeePerformanceGraphData.value = employeePerformanceData
       .filter((item) => item.employeePerformanceScores)
       .map((item) => parseFloat(item.employeePerformanceScores));
-
-    // Filter and prepare employee satisfaction data for the graph
-    console.log(employeeSatisfactionData);
     employeeSatisfactionGraphData.value = employeeSatisfactionData.filter(
       (item) =>
         item.employeeSatisfactionDates && item.employeeSatisfactionScores
     );
-    console.log(employeeSatisfactionGraphData);
 
     isLoading.value = false;
   } catch (error) {
