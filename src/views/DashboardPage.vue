@@ -134,9 +134,13 @@ const loadData = async () => {
       };
     });
 
-    // Prepare the genderLabels and genderCounts based on the genderData fetched from the API
-    genderLabels.value = genderData.map((item) => item.genderlabels);
-    genderCounts.value = genderData.map((item) => item.genderCounts);
+    // Filter out entries with blank labels or counts
+    const filteredGenderData = genderData.filter(
+      (item) => item.genderlabels && item.genderCounts
+    );
+
+    genderLabels.value = filteredGenderData.map((item) => item.genderlabels);
+    genderCounts.value = filteredGenderData.map((item) => item.genderCounts);
 
     // Filter out any entries that have empty values in other datasets
     ageRangeGraphData.value = ageRangeData.filter(
