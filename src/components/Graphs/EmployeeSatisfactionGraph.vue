@@ -92,7 +92,8 @@ export default {
             x: { grid: { display: false } },
             y: {
               grid: { display: true },
-              ticks: { stepSize: 5 },
+              beginAtZero: true,
+              ticks: { stepSize: 20 },
             },
           },
           plugins: {

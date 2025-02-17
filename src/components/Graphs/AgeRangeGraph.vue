@@ -92,7 +92,7 @@ export default {
           maintainAspectRatio: false,
           scales: {
             x: { grid: { display: false } },
-            y: { grid: { display: true }, ticks: { stepSize: 5 } },
+            y: { grid: { display: true } },
           },
           plugins: {
             title: { display: false },
