@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       chartInstance: null,
-      isMounted: false, // Track mount state
+      isMounted: false,
       scoreRanges: ["8-10", "6-8", "4-6", "2-4", "0-2"],
       chartData: {
         labels: [],
@@ -93,15 +93,15 @@ export default {
     },
   },
   mounted() {
-    this.isMounted = true; // Set flag when component is mounted
+    this.isMounted = true;
     this.$nextTick(() => {
-      this.prepareChartData(this.performanceScores); // Pass prop data initially
+      this.prepareChartData(this.performanceScores);
       this.renderChart();
       window.addEventListener("resize", this.handleResize);
     });
   },
   beforeUnmount() {
-    this.isMounted = false; // Set flag when component is unmounted
+    this.isMounted = false;
     window.removeEventListener("resize", this.handleResize);
     this.destroyChart();
   },

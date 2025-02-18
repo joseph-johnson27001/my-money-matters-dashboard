@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       chartInstance: null,
-      isDestroyed: false, // Track destruction state
+      isDestroyed: false,
     };
   },
   mounted() {

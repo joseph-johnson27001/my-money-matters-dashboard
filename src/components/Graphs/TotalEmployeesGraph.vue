@@ -29,8 +29,8 @@ ChartJS.register(
 export default {
   name: "TotalEmployeesChart",
   props: {
-    labels: Array, // Pass in months
-    counts: Array, // Pass in employee numbers
+    labels: Array,
+    counts: Array,
   },
   data() {
     return {
@@ -64,11 +64,11 @@ export default {
       this.chartInstance = new ChartJS(this.$refs.totalEmployeesChart, {
         type: "bar",
         data: {
-          labels: this.labels || [], // Use dynamic labels
+          labels: this.labels || [],
           datasets: [
             {
               label: "Number of Employees",
-              data: this.counts || [], // Use dynamic data
+              data: this.counts || [],
               backgroundColor: "rgb(204,231,246)",
               hoverBackgroundColor: "rgba(2, 136, 209)",
               borderColor: "rgba(2, 136, 209)",
