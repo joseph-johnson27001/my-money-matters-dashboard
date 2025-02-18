@@ -69,8 +69,8 @@ export default {
             {
               label: "Number of Employees",
               data: this.counts || [], // Use dynamic data
-              backgroundColor: "rgba(2, 136, 209, 0.2)",
-              hoverBackgroundColor: "rgba(2, 136, 209, 0.5)",
+              backgroundColor: "rgb(204,231,246)",
+              hoverBackgroundColor: "rgba(2, 136, 209)",
               borderColor: "rgba(2, 136, 209)",
               borderWidth: 1,
             },
