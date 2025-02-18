@@ -90,12 +90,12 @@ const stats = ref([
   {
     name: "Average Salary",
     value: "",
-    icon: "fa-sterling-sign",
+    icon: "fas fa-money-bill-wave",
   },
   {
     name: "Gender Pay Gap",
     value: "",
-    icon: "fa-sterling-sign",
+    icon: "fas fa-venus-mars",
   },
   {
     name: "Employee Satisfaction",
@@ -212,7 +212,6 @@ onMounted(loadData);
   }
 }
 
-/* Graphs container */
 .graphs-container {
   display: grid;
   gap: 10px;
@@ -220,7 +219,6 @@ onMounted(loadData);
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Stack graphs on smaller screens */
 @media (max-width: 768px) {
   .graphs-container {
     grid-template-columns: 1fr;
