@@ -85,7 +85,7 @@ const stats = ref([
   {
     name: "Total Monthly Payroll",
     value: "",
-    icon: "fa-dollar-sign",
+    icon: "fa-sterling-sign",
   },
   {
     name: "Employee Satisfaction",
