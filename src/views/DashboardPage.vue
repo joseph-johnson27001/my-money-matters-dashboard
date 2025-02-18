@@ -88,6 +88,16 @@ const stats = ref([
     icon: "fa-sterling-sign",
   },
   {
+    name: "Average Salary",
+    value: "",
+    icon: "fa-sterling-sign",
+  },
+  {
+    name: "Gender Pay Gap",
+    value: "",
+    icon: "fa-sterling-sign",
+  },
+  {
     name: "Employee Satisfaction",
     value: "",
     icon: "fa-smile",
@@ -186,7 +196,7 @@ onMounted(loadData);
 <style scoped>
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 
